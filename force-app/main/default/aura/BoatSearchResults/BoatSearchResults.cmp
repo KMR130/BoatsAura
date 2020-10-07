@@ -1,0 +1,29 @@
+<aura:component controller="BoatSearchResults"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+    access="global">
+    <aura:attribute name="boats" type="Boat__c[]" access="private" />
+    <aura:attribute name="selectedBoatId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:handler name="boatselect" event="c:BoatSelect" action="{!c.onBoatSelect}" />
+
+    <aura:method name="search" action="{!c.doSearch}" access="global" description="search the boats based on the parent requirement">
+        <aura:attribute name="boatTypeId" type="String" />
+    </aura:method>
+    
+    <lightning:layout multipleRows="true">
+        <aura:iteration items="{!v.boats}" var="boat">
+            <lightning:layoutItem size="4" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="4"
+                padding="around-small">
+                <c:BoatTile boat="{!boat}" selected="{!boat.Id == v.selectedBoatId ? false : true}" />
+            </lightning:layoutItem>
+        </aura:iteration>
+        <aura:if isTrue="{!v.boats.length eq 0}">
+            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12"
+                padding="around-small" class="slds-align_absolute-center">
+                <lightning:formattedText value="No boats found" />
+            </lightning:layoutItem>
+        </aura:if>
+
+    </lightning:layout>
+</aura:component>

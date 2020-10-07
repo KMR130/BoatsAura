@@ -1,0 +1,21 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="width" type="String" default="100%" />
+    <aura:attribute name="height" type="String" default="200px" />
+    <aura:attribute name="location" type="sObject" />
+    <aura:attribute name="mapMarkers" type="Map[]" />
+    <aura:attribute name="jsLoaded" type="boolean" default="false" />
+
+    <ltng:require styles="{!$Resource.Leaflet + '/leaflet.css'}" scripts="{!$Resource.Leaflet + '/leaflet-src.js'}"
+        afterScriptsLoaded="{!c.jsLoaded}" />
+    <aura:handler event="c:PlotMapMarker" action="{!c.onPlotMapMarker}" />
+    <div aura:id="map">
+        <lightning:card title="Current Boat Location" iconName="action:map">
+            <aura:if isTrue="{!!empty(v.mapMarkers)}">
+                <lightning:map mapMarkers="{!v.mapMarkers}" zoomLevel="10" />
+                <aura:set attribute="else">
+                    Please select a boat to see its location
+                </aura:set>
+            </aura:if>
+        </lightning:card>
+    </div>
+</aura:component>

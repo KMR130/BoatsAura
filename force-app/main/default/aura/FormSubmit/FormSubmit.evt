@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template">
+    <!-- <aura:attribute name="formData" type="object"/> -->
+    <aura:attribute name="boatTypeId" type="String"/>
+</aura:event>
